@@ -20,7 +20,7 @@ void TextEditor::ImGuiDebugPanel()
 	{
 		static std::string numberOfRecordsText;
 		numberOfRecordsText = "Number of records: " + std::to_string(mUndoBuffer.size());
-		ImGui::Text(numberOfRecordsText.c_str());
+		ImGui::Text("%s", numberOfRecordsText.c_str());
 		ImGui::DragInt("Undo index", &mState.mCurrentCursor);
 		for (int i = 0; i < mUndoBuffer.size(); i++)
 		{
@@ -30,8 +30,8 @@ void TextEditor::ImGuiDebugPanel()
 				ImGui::Text("Operations");
 				for (int j = 0; j < mUndoBuffer[i].mOperations.size(); j++)
 				{
-					ImGui::Text(mUndoBuffer[i].mOperations[j].mText.c_str());
-					ImGui::Text(mUndoBuffer[i].mOperations[j].mType == UndoOperationType::Add ? "Add" : "Delete");
+					ImGui::Text("%s", mUndoBuffer[i].mOperations[j].mText.c_str());
+					ImGui::Text("%s", mUndoBuffer[i].mOperations[j].mType == UndoOperationType::Add ? "Add" : "Delete");
 					ImGui::DragInt2("Start", &mUndoBuffer[i].mOperations[j].mStart.mLine);
 					ImGui::DragInt2("End", &mUndoBuffer[i].mOperations[j].mEnd.mLine);
 					ImGui::Separator();
