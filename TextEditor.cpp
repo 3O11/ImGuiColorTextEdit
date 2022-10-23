@@ -1699,7 +1699,6 @@ void TextEditor::OnCursorPositionChanged(int aCursor)
 	if (mDraggingSelection)
 		return;
 
-	//std::cout << "Cursor position changed\n";
 	// sort from cursors from top to bottom
 	std::sort(mState.mCursors.begin(), mState.mCursors.begin() + (mState.mCurrentCursor + 1), [](const Cursor& a, const Cursor& b) -> bool
 		{
@@ -1718,18 +1717,12 @@ void TextEditor::SetCursorPosition(const Coordinates& aPosition, int aCursor)
 	if (aCursor == -1)
 		aCursor = mState.mCurrentCursor;
 
-	//std::string log = "Moved cursor " + std::to_string(aCursor) + " from " +
-	//	std::to_string(mState.mCursors[aCursor].mCursorPosition.mLine) + "," + std::to_string(mState.mCursors[aCursor].mCursorPosition.mColumn) + " to ";
-
 	if (mState.mCursors[aCursor].mCursorPosition != aPosition)
 	{
 		mState.mCursors[aCursor].mCursorPosition = aPosition;
 		mState.mCursors[aCursor].mCursorPositionChanged = true;
 		EnsureCursorVisible();
 	}
-
-	//log += std::to_string(mState.mCursors[aCursor].mCursorPosition.mLine) + "," + std::to_string(mState.mCursors[aCursor].mCursorPosition.mColumn);
-	//std::cout << log << std::endl;
 }
 
 void TextEditor::SetSelectionStart(const Coordinates& aPosition, int aCursor)
@@ -1980,7 +1973,6 @@ void TextEditor::MoveLeft(int aAmount, bool aSelect, bool aWordMode)
 			}
 
 			mState.mCursors[c].mCursorPosition = Coordinates(line, GetCharacterColumn(line, cindex));
-			std::cout << "changed from " << oldPos.mColumn << " to " << mState.mCursors[c].mCursorPosition.mColumn << std::endl;
 
 			assert(mState.mCursors[c].mCursorPosition.mColumn >= 0);
 			if (aSelect)
@@ -2001,7 +1993,6 @@ void TextEditor::MoveLeft(int aAmount, bool aSelect, bool aWordMode)
 					mState.mCursors[c].mCursorPosition = mState.mCursors[c].mInteractiveStart;
 				mState.mCursors[c].mInteractiveStart = mState.mCursors[c].mInteractiveEnd = mState.mCursors[c].mCursorPosition;
 			}
-			std::cout << "Setting selection for " << c << std::endl;
 			SetSelection(mState.mCursors[c].mInteractiveStart, mState.mCursors[c].mInteractiveEnd, aSelect && aWordMode ? SelectionMode::Word : SelectionMode::Normal, c);
 		}
 	}
